@@ -6,9 +6,11 @@ function MainArea(props) {
 
     return (
         <section className={styles.MainArea}>
-            <div className={PostArea}>
+            <div className={styles.PostArea}>
                 <PostList store={props.store} styles={styles}/>
             </div>
         </section>
     )
 }
+
+export default MainArea;

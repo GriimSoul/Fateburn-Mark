@@ -1,27 +1,31 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addSubreddit } from './Sub-Search-Slice';
+import React from 'react';
+import { useDispatch, useSelector} from 'react-redux';
+import { clearSubReddits, setSearchInput, searchSubs } from './Sub-Search-Slice';
 
-function SubSearch() {
-  const [subredditInput, setSubredditInput] = useState('');
+function SubSearch(props) {
   const dispatch = useDispatch();
+  const input = useSelector((state) => state.subSearch.subSearchInput);
+  const {smokinStyle} = props;
 
-  const handleAddSubreddit = () => {
-    if (subredditInput) {
-      dispatch(addSubreddit(subredditInput));
-      setSubredditInput('');
+  const handleChange = (e) => {
+    dispatch(setSearchInput(e.target.value));
+    if (input) {
+      dispatch(searchSubs(input));
+    }
+    else {
+      dispatch(clearSubReddits());
     }
   };
+
 
   return (
     <div>
       <input
         type="text"
-        value={subredditInput}
-        onChange={(e) => setSubredditInput(e.target.value)}
-        placeholder="Add subreddit"
+        value={input}
+        onChange={handleChange}
+        placeholder="Find a SubReddit"
       />
-      <button onClick={handleAddSubreddit}>+</button>
     </div>
   );
 }

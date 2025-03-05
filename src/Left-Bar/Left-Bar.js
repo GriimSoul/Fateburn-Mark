@@ -13,9 +13,11 @@ function LeftBar(props) {
 
     return (
         <section className={styles.leftArea}>
-            <SubSearch smokinStyle={styles} store={props.store}/>
-            <SubList smokinStyle={styles} store={props.store}/>
+            <SubSearch smokinStyle={styles} />
+            <SubList smokinStyle={styles}/>
             <button className={isHidden ? styles.Hide : styles.Show} onClick={toggleVisibility}/> 
         </section>
     )
 }
+
+export default LeftBar;

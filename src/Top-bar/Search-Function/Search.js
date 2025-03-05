@@ -1,29 +1,42 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRedditPosts, clearPosts } from './Search Slice';
+import { initiateSearch, setSearchTerm, filterPosts} from './Search-Slice';
 
-function Search() {
+function Search(props) {
+  const styles = props.smonkingStyle
+
   const dispatch = useDispatch();
-  const [searchTerm, setSearchTerm] = useState('');
-  const selectedSubreddit = useSelector((state) => state.subreddit.selected); // Assuming you have a subreddit slice
+  const selectedSubreddit = useSelector((state) => state.subList.selectedSubreddit); // Obtain Name of Selected Subreddit, if any.
+  const searchTerm = useSelector((state) => state.searchTop.postSearchTerm); // Obtain currently typed out search term
+  const currentPosts = useSelector((state) => state.postList);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (searchTerm) {
-      dispatch(fetchRedditPosts({ searchTerm, subreddit: selectedSubreddit }));
-      setSearchTerm('');
+      // Dispatch the selected subreddit (if applicable) and the search term to fetch results
+      dispatch(initiateSearch({currentPosts: currentPosts, searchTerm: searchTerm}));
+      dispatch(filterPosts({ searchTerm: searchTerm, subreddit: selectedSubreddit }));
     }
   };
+const handleChange = (e) => {
+  if (e.target.value !== '') {
+    dispatch(setSearchTerm(e.target.value))
+  }
+  else {
+    handleSubmit();
+  }
+
+}
 
   return (
     <form onSubmit={handleSubmit}>
       <input
         type="text"
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={handleChange}
       />
       <button type="submit">
-        🔍
+        {searchTerm ? "X" : "🔍"}
       </button>
     </form>
   );
