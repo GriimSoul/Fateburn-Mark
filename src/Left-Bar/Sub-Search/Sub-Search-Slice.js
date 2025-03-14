@@ -6,7 +6,7 @@ import { addSubreddit } from '../Sub-List/List-Slice';
 export const searchSubs = createAsyncThunk(
   'subSearch/fetchSubReddits',
   async (searchTerm) => {
-    const response = await fetch(`https://www.reddit.com/subreddit/search.json?q=${searchTerm}`);
+    const response = await fetch(`https://www.reddit.com/subreddits/search.json?q=${searchTerm}`);
     const data = await response.json();
     return data.data.children.map(child => child.data);
   }

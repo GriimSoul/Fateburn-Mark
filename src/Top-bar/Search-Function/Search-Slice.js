@@ -2,11 +2,32 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // Async thunk for fetching Reddit posts
 export const filterPosts = createAsyncThunk(
-  'searchTop/fetchRedditPosts',
-  async ({searchTerm, subReddit}) => {
-    const response = await fetch(`https://www.reddit.com${ subReddit ? subReddit : "/"}search.json?q=${searchTerm}`);
-    const data = await response.json();
-    return data.data.children.map(child => child.data);
+  'search/fetchFilteredPosts',
+  async ({ searchTerm, subReddit, after }, { rejectWithValue }) => { // Add `after` parameter
+    try {
+      // Build the URL with optional subreddit and pagination
+      const url = `https://www.reddit.com/${
+        subReddit && subReddit !== 'Everything' ? subReddit : ''
+      }search.json?q=${encodeURIComponent(searchTerm)}&limit=50${
+        after ? `&after=${after}` : ''
+      }`;
+
+      const response = await fetch(url, {
+        headers: {
+          "User-Agent": "Fateburn Mark/0.2 (by /u/GriimSoul)"
+        }
+      });
+
+      if (!response.ok) throw new Error('Search failed');
+      const data = await response.json();
+
+      return {
+        posts: data.data.children.map(child => child.data),
+        after: data.data.after // Pass the pagination token
+      };
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
@@ -17,33 +38,38 @@ const searchSlice = createSlice({
     loadingPost: false,
     errorPost: null,
     postSearchTerm: '',
-    backupPosts:[],
-    currentSearch: ''
+    currentSearch: '',
+    searchAfter: null
   },
   reducers: {
     setSearchTerm: (state, action) => {
       state.postSearchTerm = action.payload;
     },
     initiateSearch: (state, action) => {
-      state.backupPosts = action.payload.currentPosts;
       state.currentSearch = action.payload.searchTerm;
+    },
+    clearSearch: (state, action) => {
+      state.postResults = [];
     }
   },
   extraReducers: (builder) => {
     builder
       .addCase(filterPosts.pending, (state) => {
-        state.loading = true;
+        state.loadingPost = true;
       })
       .addCase(filterPosts.fulfilled, (state, action) => {
-        state.loading = false;
-        state.postResults = action.payload;
+        state.isLoading = false;
+        // Append new search results (instead of replacing)
+        state.searchPosts = [...state.searchPosts, ...action.payload.posts];
+        // Update the pagination token
+        state.searchAfter = action.payload.after;
       })
       .addCase(filterPosts.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
+        state.loadingPost = false;
+        state.errorPost = action.error.message;
       })
   },
 });
 
-export const { setSearchTerm, initiateSearch} = searchSlice.actions;
+export const { setSearchTerm, initiateSearch, clearSearch} = searchSlice.actions;
 export default searchSlice.reducer;

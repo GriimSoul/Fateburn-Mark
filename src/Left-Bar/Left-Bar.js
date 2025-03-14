@@ -12,11 +12,15 @@ function LeftBar(props) {
     };
 
     return (
-        <section className={styles.leftArea}>
-            <SubSearch smokinStyle={styles} />
-            <SubList smokinStyle={styles}/>
-            <button className={isHidden ? styles.Hide : styles.Show} onClick={toggleVisibility}/> 
-        </section>
+        <div>
+            <section className={isHidden ? styles.leftAreaHidden : styles.leftArea}>
+                <SubSearch smokinStyle={styles} />
+                <SubList smokinStyle={styles}/>
+            </section>
+            <button className={isHidden ? styles.Hide : styles.Show} onClick={toggleVisibility}>
+                    hide button
+                </button>
+        </div>
     )
 }
 
