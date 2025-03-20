@@ -1,41 +1,62 @@
-import React from "react";
+import React, {useState} from "react";
+import upVoteImg from './Up.svg';
+import downVoteImg from './Down.svg';
+import arrowUp from './Arrow Up.svg';
+import arrowDown from './Arrow Down.svg';
+import commentImg from './comments.svg';
+import goBack from './go back.svg';
+import { useSelector, useDispatch } from "react-redux";
+import { enterPost, exitPost } from "../Post-List/Post-List-Slice";
+import timeAgo from '../../utils/TimeStamps';
+import fixUrlsIfAny, {cleanThemAmps} from '../../utils/FunctionalInnerUrls';
 
-function Post({styles, information, upVote, downVote, enter}) {
+function Post({styles, information}) {
+// Define variables for ease of use, and to avoid head explosions.
+    const dispatch = useDispatch();
     const morePictures = [];
     const singleLink = information.url_overridden_by_dest;
+// Create Local states to handle simple changes & store InPost Selector.
+    let [score, setScore] = useState(information.score);
+    const [isUp, setIsUp] = useState(false);
+    const [isDown, setIsDown] = useState(false);
+    const inPost = useSelector(state => state.posts.inPost);
 
-    function cleanThemAmps(str) {
-        return typeof str === 'string' 
-        ? str.replace(/&amp;/g, '&') 
-        : console.log('check Post.js');
+    function enter() {
+        dispatch(enterPost(information));
+      }
+    function exit() {
+        dispatch(exitPost())
     }
 
-    function fixUrlsIfAny() {
-        let postContent = information.selftext;
-
-        // Find all URL matches in the string
-        const urlMatches = postContent.match(/https?:\/\/[^\s]+/gi);
-        
-        // If URLs found in post text
-        if (urlMatches) {
-            // Use Set to avoid duplicate replacements
-            const uniqueUrls = [...new Set(urlMatches)];
-        
-            urlMatches.forEach(url => {
-            const dirtyURL = url;
-            const cleanURL = cleanThemAmps(url);
-            postContent = postContent.replaceAll(dirtyURL, <a href={cleanURL} target="_blank">${cleanURL}</a>);
-            })
-
-        return postContent;
-        }
-        else {
-            return postContent;
-        }
+    function handleUpVote() {
+        setScore(prev => {
+            let delta = 1; // Assume we're adding an upvote
+            if (isUp) {
+                delta = -1; // Removing existing upvote
+            } else if (isDown) {
+                delta = 2; // Removing downvote (+1) + adding upvote (+1)
+            }
+            return prev + delta;
+        });
+        setIsDown(isUp ? isDown : false); // Remove downvote if adding upvote
+        setIsUp(!isUp); // Toggle upvote state
+    }
+    
+    function handleDownVote() {
+        setScore(prev => {
+            let delta = -1; // Assume we're adding a downvote
+            if (isDown) {
+                delta = 1; // Removing existing downvote
+            } else if (isUp) {
+                delta = -2; // Removing upvote (-1) + adding downvote (-1)
+            }
+            return prev + delta;
+        });
+        setIsUp(isDown ? isUp : false); // Remove upvote if adding downvote
+        setIsDown(!isDown); // Toggle downvote state
     }
 
-    function ifYoutubeLink() {
-        // If the post has a single youtube video link, modify it into an embed link to be able to used it in an iframe
+    function ifYoutubeLink() { // If the post has a single youtube video link, modify it into an embed link to be able to used it in an iframe
         const youtubeLink = singleLink.replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/');
         return youtubeLink;
     }
@@ -52,40 +73,53 @@ function Post({styles, information, upVote, downVote, enter}) {
 
     return (
         <article>
+            {inPost && (<img src={goBack} onClick={exit}></img>)}
+            <div>
 
-            <h2>{information.title}</h2>
-            <p>{fixUrlsIfAny()}</p>
+                <img src={isUp ? upVoteImg : arrowUp} alt="Upvote" onClick={handleUpVote}/>
+                <h3>{score}</h3>
+                <img src={isDown ? downVoteImg : arrowDown} alt="Downvote" onClick={handleDownVote}/>
+
+                {inPost ? (<img src={commentImg}></img>): (<img onClick={enter} src={commentImg}></img>)}
+                <h3>{information.num_comments}</h3>
+
+            </div>
+            
+            <p>{timeAgo(information.created_utc)}</p>
+            {inPost ? (<h2><a href={"https://www.reddit.com" + information.permalink} target="_blank">{information.title}</a></h2>)
+             : (<h2 onClick={enter}>{information.title}</h2>)}
+             
+            <p dangerouslySetInnerHTML={fixUrlsIfAny(information.selftext)}></p>
+
+        {/* Logic to handle rendering posts that are image or video centric.*/}
 
             {singleLink && (
-    (singleLink.includes("https://www.youtube.com") || singleLink.includes("https://youtu.be")) ? (
+                (singleLink.includes("https://www.youtube.com") || singleLink.includes("https://youtu.be")) ? (
         // Handle if the post has a youtube Video.
-        <iframe src={ifYoutubeLink()} 
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; 
-                encrypted-media; gyroscope; picture-in-picture; web-share" 
-                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-        </iframe> 
-    ) : (
-        information.is_gallery ? ( // check if multiple images are in the post
-            morePictures.map((pic) => (
-                <img 
-                    key={pic}  // Add unique key for list items
-                    src={pic} 
-                />
-            ))
-        ) : (
+
+                    <iframe src={ifYoutubeLink()} 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; 
+                            encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                    </iframe>
+
+                ) : ( // check if multiple images are in the post
+                
+                    information.is_gallery ? ( 
+                        morePictures.map((pic) => (
+                            <img key={pic} src={pic} />
+                        ))) : (
             // New file extension check for single link
-            (/\.(jpg|jpeg|gif|png|webp)$/i.test(singleLink)) ? (
-                // Show image if extension matches
-                <img src={singleLink} />
-            ) : (
-                // Show raw link text if not an image
-                <a href={singleLink}>{singleLink}</a>
-            )
-        )
-    )
-)}
-            
+
+                        (/\.(jpg|jpeg|gif|png|webp)$/i.test(singleLink)) ? (
+            // Show image if extension matches
+
+                            <img src={singleLink} />
+                        ) : (
+                            // Show raw link text if not an image
+
+                            <a href={singleLink}>{singleLink}</a> ))))}
         </article>
     )
 }

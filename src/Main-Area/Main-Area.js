@@ -3,16 +3,18 @@ import { useSelector } from 'react-redux';
 import PostList from './Post-List/Post-List';
 import Post from './Post/Post'
 import styles from './Main-Area.module.css';
+import Comments from './Comments/Comments';
 
 function MainArea(props) {
-
     const inPost = useSelector((state) => state.posts.inPost);
-    const currentPost = useSelector((state) => state.posts.currentPost); 
+    const currentPost = useSelector((state) => state.posts.currentPost);
 
     return (
         <section className={styles.MainArea}>
             <div className={styles.PostArea}>
-                {inPost ? <Post information={currentPost}/>: <PostList styles={styles}/>}
+                {inPost ? (<div>
+                    <Post information={currentPost} /> <Comments styles={styles} information={currentPost}/>
+                </div>) : <PostList styles={styles}/>}
             </div>
         </section>
     )
