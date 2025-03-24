@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+// So many damn imports
+import React, {useEffect, useState} from "react";
 import upVoteImg from './Up.svg';
 import downVoteImg from './Down.svg';
 import arrowUp from './Arrow Up.svg';
@@ -9,17 +10,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { enterPost, exitPost } from "../Post-List/Post-List-Slice";
 import timeAgo from '../../utils/TimeStamps';
 import fixUrlsIfAny, {cleanThemAmps} from '../../utils/FunctionalInnerUrls';
+import { themProfilePics, themSubredditPics } from "../../utils/GimmePics";
 
 function Post({styles, information}) {
 // Define variables for ease of use, and to avoid head explosions.
     const dispatch = useDispatch();
-    const morePictures = [];
     const singleLink = information.url_overridden_by_dest;
-// Create Local states to handle simple changes & store InPost Selector.
+// Create Local states to handle simple changes & use Selectors.
+    const morePictures = [];
     let [score, setScore] = useState(information.score);
     const [isUp, setIsUp] = useState(false);
     const [isDown, setIsDown] = useState(false);
+    const subReddits = useSelector(state => state.subList.subReddits);
     const inPost = useSelector(state => state.posts.inPost);
+    const userInfo = useSelector(state => state.comments.themProfiles);
+    const pfpElement = themProfilePics(userInfo, information.author);
+    const subImgElement = themSubredditPics(subReddits, information.subreddit);
 
     function enter() {
         dispatch(enterPost(information));
@@ -120,6 +126,12 @@ function Post({styles, information}) {
                             // Show raw link text if not an image
 
                             <a href={singleLink}>{singleLink}</a> ))))}
+            <div>
+                {pfpElement}
+                <p>{information.author}</p>
+                {subImgElement}
+                <p>{information.subreddit}</p>
+            </div>
         </article>
     )
 }

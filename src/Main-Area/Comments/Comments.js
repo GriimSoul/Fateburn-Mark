@@ -1,7 +1,22 @@
-import React, {useLayoutEffect} from "react";
+import React, {useLayoutEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchComments} from "./Comments-Slice";
 import Comment from './Comment';
+import getMeThoseNames from '../../utils/Comment Name Fetch';
+import { fetchUserProfile } from "./Comments-Slice";
+
+function getAuthorNames(commentInfo) {
+    if (commentInfo.length == 0) {
+        return null
+    };
+    console.log(commentInfo);
+    let authorNames = []
+    commentInfo.map(aComment => {
+        authorNames.push(aComment.data.author);
+        console.log(authorNames);
+    });
+    return authorNames;
+}
 
 function Comments({styles, information}) {
     const inCaseOfChange = information.permalink ? information.permalink : null;
@@ -10,7 +25,17 @@ function Comments({styles, information}) {
         dispatch(fetchComments(information.permalink));
     },[inCaseOfChange])
 
-    const comments = useSelector((state) => state.comments.comments);
+    const {comments, currentProfiles} = useSelector((state) => ({
+        comments:state.comments.comments,
+        currentProfiles:state.comments.themProfiles
+    }));
+    let authorNames = getMeThoseNames(comments);
+    authorNames = authorNames.filter(cName => !(currentProfiles.some(prof => prof.data.data.name === cName)))
+    
+
+     useLayoutEffect(() => {
+        dispatch(fetchUserProfile(authorNames));
+    },[inCaseOfChange,authorNames]) 
 
     return (
         <section>

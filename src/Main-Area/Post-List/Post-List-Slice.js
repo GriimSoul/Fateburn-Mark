@@ -10,7 +10,7 @@ export const homePosts = createAsyncThunk(
       }
 
       const response = await fetch(
-        `https://www.reddit.com/r/${Array.isArray(subReddits) ? subReddits.join('+') : subReddits}/new.json?limit=50${after ? `&after=${after}` : ''}`,
+        `https://www.reddit.com/r/${Array.isArray(subReddits) ? subReddits.join('+') : subReddits}/new.json?limit=5${after ? `&after=${after}` : ''}`,
         {
           headers: {
             "User-Agent": "Fateburn Mark/0.2 (by /u/GriimSoul)"

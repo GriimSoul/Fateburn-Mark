@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { homePosts} from './Post-List-Slice';
 import Post from '../Post/Post';
+import { fetchUserProfile } from '../Comments/Comments-Slice';
 
 export const getSubNames = (subs) => {
   let subNames = [];
@@ -12,13 +13,27 @@ export const getSubNames = (subs) => {
    })
    return subNames;
 };
+const getAuthorNames = (postsInfo, profileInfo) => {
+  let postCreatorNames = [];
+    for (let post of postsInfo) {
+      const exists = profileInfo.some(oldProfile => oldProfile.data.data.name === post.data.author);
+      if (post.data.author !== '[deleted]' && !postCreatorNames.includes(post.data.author && !exists)) {
+        postCreatorNames.push(post.data.author);
+      }
+    }
+  return postCreatorNames;
+}
 
 function PostList({styles}) {
 
     const dispatch = useDispatch();
     const subReddits = useSelector((state) => state.subList.subReddits);
-    const posts = useSelector((state) => state.posts.posts);
-    const postResults = useSelector((state) => state.searchTop.postResults);
+    const {posts, postResults, currentProfiles} = useSelector((state) => ({
+      posts: state.posts.posts,
+      postResults: state.searchTop.postResults,
+      currentProfiles: state.comments.themProfiles
+    }));
+    console.log('AAAAAAH, I CANT STOP RERENDERING!!!!!');
 
     const subNames = getSubNames(subReddits);
 
@@ -26,6 +41,16 @@ function PostList({styles}) {
     useEffect(() => {
         dispatch(homePosts({subReddits: subNames, after: null}));
     }, [])
+
+    let postCreatorNames = getAuthorNames(posts, currentProfiles);
+    postCreatorNames = postCreatorNames.filter(cName => !(currentProfiles.some(prof => prof.data.data.name === cName)))
+    
+    // Use Effect to store user profiles.
+    useEffect(() => {
+      if (postCreatorNames.length > 0) {
+      dispatch(fetchUserProfile(postCreatorNames));
+    }
+    },[posts])
 
     return (
         <section className={styles.Post}>

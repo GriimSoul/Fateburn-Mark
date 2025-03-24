@@ -17,10 +17,10 @@ export const fetchComments = createAsyncThunk(
 
 export const fetchUserProfile = createAsyncThunk(
   'comments/fetchUserProfile',
-  async (userAndQuestions, { rejectWithValue }) => {
+  async (authorNames, { rejectWithValue }) => {
     try {
       // Create an array of fetch promises for each user
-      const fetchPromises = userAndQuestions.users.map(user => 
+      const fetchPromises = authorNames.map(user => 
         fetch(`https://www.reddit.com/user/${user}/about.json`)
           .then(response => {
             if (!response.ok) throw new Error('Failed to fetch user profile');
@@ -31,7 +31,7 @@ export const fetchUserProfile = createAsyncThunk(
 
       // Wait for all fetch promises to resolve
       const profiles = await Promise.all(fetchPromises);
-      return [userAndQuestions.Pauthor , profiles]; // Return the array of profiles
+      return profiles; // Return the array of profiles
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -42,8 +42,7 @@ const commentsSlice = createSlice({
   name: 'comments',
   initialState: {
     comments: [],
-    userProfiles: [],
-    authorProfiles: [],
+    themProfiles: [],
     loading: false,
     error: null
   },
@@ -78,12 +77,11 @@ const commentsSlice = createSlice({
       })
       .addCase(fetchUserProfile.fulfilled, (state, action) => {
         state.loading = 'succeeded';
-        if (action.payload[0]) {
-          state.authorProfiles.push(action.payload[1]);
-        }
-        else {
-          state.userProfiles.push(action.payload[1]);
-        }
+        action.payload.forEach(newProfile => {
+          const exists = state.themProfiles.some(oldProfile => oldProfile.data.data.name === newProfile.data.data.name);
+          !exists && state.themProfiles.push(newProfile);
+          }
+        ) 
       })
       .addCase(fetchUserProfile.rejected, (state, action) => {
         state.loading = 'failed';
