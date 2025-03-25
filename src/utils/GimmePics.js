@@ -11,7 +11,6 @@ export function themProfilePics(information, author) {
     }
     else if (information.length > 0) {
         const individualInfo = information.find(obj => obj.data.data.name === author) ? information.find(obj => obj.data.data.name === author): null;
-        console.log(information);
         if (individualInfo) {
             const cleansedURL = cleanThemAmps(individualInfo.data.data.subreddit.icon_img);
             return (

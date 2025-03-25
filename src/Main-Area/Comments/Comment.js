@@ -10,7 +10,7 @@ function Comment({styles, information}) {
     const repliesExist = information.replies ? true : false;
     let authors = [information.author];
     const userInfo = useSelector(state => state.comments.themProfiles);
-    //const pfpElement = themProfilePics(userInfo, information.author);
+    const pfpElement = themProfilePics(userInfo, information.author);
 
     // create array of reply elements & fill it if replies exist || Pain
     let replyElements = [];
@@ -28,10 +28,12 @@ function Comment({styles, information}) {
             }
 
             // Create the reply element
+            const replyPfp = themProfilePics(userInfo, reply.author);
             const element = (
                 <div key={reply.id}>
+                    {replyPfp}
                     <h4>
-                        {authorExists ? (
+                        {authorExists ? ( 
                             <a href={`https://www.reddit.com/user/${reply.author}/`} target='_blank' rel="noopener noreferrer">
                                 {reply.author}
                             </a>

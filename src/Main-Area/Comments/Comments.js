@@ -5,19 +5,6 @@ import Comment from './Comment';
 import getMeThoseNames from '../../utils/Comment Name Fetch';
 import { fetchUserProfile } from "./Comments-Slice";
 
-function getAuthorNames(commentInfo) {
-    if (commentInfo.length == 0) {
-        return null
-    };
-    console.log(commentInfo);
-    let authorNames = []
-    commentInfo.map(aComment => {
-        authorNames.push(aComment.data.author);
-        console.log(authorNames);
-    });
-    return authorNames;
-}
-
 function Comments({styles, information}) {
     const inCaseOfChange = information.permalink ? information.permalink : null;
     const dispatch = useDispatch();
