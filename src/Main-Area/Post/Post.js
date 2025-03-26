@@ -1,16 +1,19 @@
+// Visual Imports
+    import upVoteImg from './Up.svg';
+    import downVoteImg from './Down.svg';
+    import arrowUp from './Arrow Up.svg';
+    import arrowDown from './Arrow Down.svg';
+    import commentImg from './comments.svg';
+    import goBack from './go back.svg';
 // So many damn imports
-import React, {useEffect, useState} from "react";
-import upVoteImg from './Up.svg';
-import downVoteImg from './Down.svg';
-import arrowUp from './Arrow Up.svg';
-import arrowDown from './Arrow Down.svg';
-import commentImg from './comments.svg';
-import goBack from './go back.svg';
-import { useSelector, useDispatch } from "react-redux";
-import { enterPost, exitPost } from "../Post-List/Post-List-Slice";
-import timeAgo from '../../utils/TimeStamps';
-import fixUrlsIfAny, {cleanThemAmps} from '../../utils/FunctionalInnerUrls';
-import { themProfilePics, themSubredditPics } from "../../utils/GimmePics";
+    import React, {useState} from "react";
+    import { useSelector, useDispatch } from "react-redux";
+    import { enterPost, exitPost } from "../Post-List/Post-List-Slice";
+    import timeAgo from '../../utils/TimeStamps';
+    import fixUrlsIfAny, {cleanThemAmps} from '../../utils/FunctionalInnerUrls';
+    import { themProfilePics, themSubredditPics } from "../../utils/GimmePics";
+    import {clearComments} from '../Comments/Comments-Slice';
+
 
 function Post({styles, information}) {
 // Define variables for ease of use, and to avoid head explosions.
@@ -21,9 +24,10 @@ function Post({styles, information}) {
     let [score, setScore] = useState(information.score);
     const [isUp, setIsUp] = useState(false);
     const [isDown, setIsDown] = useState(false);
-    const subReddits = useSelector(state => state.subList.subReddits);
+    const subReddits = useSelector(state => state.subList.subBackUp);
     const inPost = useSelector(state => state.posts.inPost);
     const userInfo = useSelector(state => state.comments.themProfiles);
+
     const pfpElement = themProfilePics(userInfo, information.author);
     const subImgElement = themSubredditPics(subReddits, information.subreddit);
 
@@ -31,7 +35,8 @@ function Post({styles, information}) {
         dispatch(enterPost(information));
       }
     function exit() {
-        dispatch(exitPost())
+        dispatch(exitPost());
+        dispatch(clearComments());
     }
 
     function handleUpVote() {

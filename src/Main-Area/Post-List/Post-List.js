@@ -4,7 +4,8 @@ import { homePosts} from './Post-List-Slice';
 import Post from '../Post/Post';
 import { fetchUserProfile } from '../Comments/Comments-Slice';
 
-export const getSubNames = (subs) => {
+export const getSubNames = (subs, selectedSubreddit) => {
+  if (selectedSubreddit === 'Everything') {
   let subNames = [];
   let subRedditsV2 = subs.filter(sub => sub.id !== 'Nothing is but what is not');
 
@@ -12,6 +13,11 @@ export const getSubNames = (subs) => {
       subNames.push(sub.display_name);
    })
    return subNames;
+  }
+  else {
+    const subName = [selectedSubreddit];
+    return subName;
+  }
 };
 const getAuthorNames = (postsInfo, profileInfo) => {
   let postCreatorNames = [];
@@ -28,19 +34,21 @@ function PostList({styles}) {
 
     const dispatch = useDispatch();
     const subReddits = useSelector((state) => state.subList.subReddits);
-    const {posts, postResults, currentProfiles} = useSelector((state) => ({
+    const {posts, postResults, currentProfiles, selectedSubreddit} = useSelector((state) => ({
       posts: state.posts.posts,
       postResults: state.searchTop.postResults,
-      currentProfiles: state.comments.themProfiles
+      currentProfiles: state.comments.themProfiles,
+      selectedSubreddit: state.subList.selectedSubreddit
     }));
     console.log('AAAAAAH, I CANT STOP RERENDERING!!!!!');
 
-    const subNames = getSubNames(subReddits);
+    
 
     // Use Effect to obtain starting posts
     useEffect(() => {
+        const subNames = getSubNames(subReddits, selectedSubreddit);
         dispatch(homePosts({subReddits: subNames, after: null}));
-    }, [])
+    }, [dispatch])
 
     let postCreatorNames = getAuthorNames(posts, currentProfiles);
     postCreatorNames = postCreatorNames.filter(cName => !(currentProfiles.some(prof => prof.data.data.name === cName)))
@@ -50,7 +58,7 @@ function PostList({styles}) {
       if (postCreatorNames.length > 0) {
       dispatch(fetchUserProfile(postCreatorNames));
     }
-    },[posts])
+    },[posts,dispatch])
 
     return (
         <section className={styles.Post}>

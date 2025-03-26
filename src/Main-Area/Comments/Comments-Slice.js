@@ -47,11 +47,8 @@ const commentsSlice = createSlice({
     error: null
   },
   reducers: {
-    clearUserP: (state, action) => {
-      state.userProfiles = [];
-    },
-    clearAuthorP: (state, action) => {
-      state.authorProfiles = [];
+    clearComments: (state, action) => {
+      state.comments = [];
     }
   },
   extraReducers: (builder) => {
@@ -90,5 +87,5 @@ const commentsSlice = createSlice({
   }
 });
 
-export const {clearAuthorP, clearComments, clearUserP} = commentsSlice.actions;
+export const {clearComments} = commentsSlice.actions;
 export default commentsSlice.reducer;

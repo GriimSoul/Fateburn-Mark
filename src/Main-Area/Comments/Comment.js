@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { useDispatch, useSelector} from "react-redux";
 import fixUrlsIfAny from "../../utils/FunctionalInnerUrls";
 import timeAgo from '../../utils/TimeStamps';
@@ -6,7 +6,7 @@ import { themProfilePics } from "../../utils/GimmePics";
 
 function Comment({styles, information}) {
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const repliesExist = information.replies ? true : false;
     let authors = [information.author];
     const userInfo = useSelector(state => state.comments.themProfiles);
@@ -34,7 +34,7 @@ function Comment({styles, information}) {
                     {replyPfp}
                     <h4>
                         {authorExists ? ( 
-                            <a href={`https://www.reddit.com/user/${reply.author}/`} target='_blank' rel="noopener noreferrer">
+                            <a href={`https://www.reddit.com/user/${reply.author}/`} target='_blank' rel="noreferrer">
                                 {reply.author}
                             </a>
                         ) : reply.author}
@@ -55,8 +55,8 @@ function Comment({styles, information}) {
     return (
         <section>
             <div>
-
-                <h4><a href={`https://www.reddit.com/user/${information.author}/`} target='_blank'>{information.author}</a></h4>
+                <a href={`https://www.reddit.com/user/${information.author}/`} target='_blank' rel="noreferrer">{pfpElement}</a>
+                <h4><a href={`https://www.reddit.com/user/${information.author}/`} target='_blank' rel="noreferrer">{information.author}</a></h4>
                 <p>{timeAgo(information.created_utc)}</p>
                 <p dangerouslySetInnerHTML={fixUrlsIfAny(information.body)}></p>
             </div>

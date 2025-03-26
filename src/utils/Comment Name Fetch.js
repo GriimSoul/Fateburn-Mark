@@ -1,4 +1,7 @@
 export default function godThisIsPain(information) {
+    console.log('okay now we should see WHY THE FUCK, it cannot acess all of the data things.')
+    console.log(information);
+
     const allTheDamnNames = [];
     information.map((singleComment) => {
         // Begins by storing the starting author name
@@ -8,7 +11,7 @@ export default function godThisIsPain(information) {
         const repliesExist = singleComment.data.replies ? true : false;
 
         if (repliesExist) {
-            const queue = [...singleComment.replies.data.children]; // Initialize the queue with all top-level replies
+            const queue = [...singleComment.data.replies.data.children]; // Initialize the queue with all top-level replies
             while (queue.length > 0) {
                 const child = queue.shift(); // Dequeue the first element
                 const reply = child.data; // Access the reply data
@@ -26,6 +29,7 @@ export default function godThisIsPain(information) {
                 }
             }
         }
+        return 'uh sure';
     })
     return allTheDamnNames;
 }

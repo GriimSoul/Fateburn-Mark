@@ -4,6 +4,7 @@ import subSearchReducer from './Left-Bar/Sub-Search/Sub-Search-Slice';
 import subListReducer from './Left-Bar/Sub-List/List-Slice';
 import postsReducer from './Main-Area/Post-List/Post-List-Slice';
 import commentsReducer from './Main-Area/Comments/Comments-Slice';
+import noMoreTimeouts from './utils/noMoreTimeouts';
 
 const store = configureStore({
   reducer: {
@@ -12,7 +13,8 @@ const store = configureStore({
     subList: subListReducer,
     posts: postsReducer,
     comments: commentsReducer
-  }
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(noMoreTimeouts)
 });
 
 export default store;

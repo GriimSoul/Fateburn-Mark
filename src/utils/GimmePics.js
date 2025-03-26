@@ -14,9 +14,7 @@ export function themProfilePics(information, author) {
         if (individualInfo) {
             const cleansedURL = cleanThemAmps(individualInfo.data.data.subreddit.icon_img);
             return (
-                <a href={`https://www.reddit.com/user/${author}`}>
-                    <img alt={author + ' profile picture'} src={cleansedURL}/>
-                </a>
+                <a href={`https://www.reddit.com/user/${author}`} target='_blank' rel="noreferrer"><img alt={author + ' profile picture'} src={cleansedURL}/></a>
             )
         }
     }

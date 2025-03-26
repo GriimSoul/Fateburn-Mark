@@ -60,9 +60,16 @@ const postsSlice = createSlice({
       })
       .addCase(homePosts.fulfilled, (state, action) => {
         state.loading = false;
-        // Append new posts to existing ones
-        state.posts = [...state.posts, ...action.payload.posts];
-        // Update the `after` token for next fetch
+        if (state.after && action.payload.after !== state.after) {
+          state.posts = [...state.posts, ...action.payload.posts];
+        }
+        else {
+          state.posts = action.payload.posts;
+        }
+        // In case of duplicates, clean them
+        state.posts = state.posts.filter((obj, index, self) =>
+          index === self.findIndex((t) => t.data.id === obj.data.id)
+        );
         state.after = action.payload.after;
       })
       .addCase(homePosts.rejected, (state, action) => {

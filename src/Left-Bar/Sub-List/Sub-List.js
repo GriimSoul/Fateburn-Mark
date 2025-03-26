@@ -10,11 +10,12 @@ function SubList({smokinStyle}) {
   const dispatch = useDispatch();
 
   // Obtain input from the top Search bar in order to re-search once a new Sub has been selected
-  const searchInput = useSelector((state) => state.searchTop.postSearchTerm);
+  const searchInput = useSelector(state => state.searchTop.postSearchTerm);
   // obtain both the currently saved SubReddits and the search results alonside the currently selected SubReddit
-  const subReddits = useSelector((state) => state.subList.subReddits);
-  const selected = useSelector((state) => state.subList.selectedSubreddit);
-  const subResults = useSelector((state) => state.subSearch.subRedditResults);
+  const subReddits = useSelector(state => state.subList.subReddits);
+  const selected = useSelector(state => state.subList.selectedSubreddit);
+  const subResults = useSelector(state => state.subSearch.subRedditResults);
+  const inPost = useSelector(state => state.posts.inPost);
 
   // Function to handle when the selected subreddit has been removed, by switching to the home section.
   function handleRemoveInUse() {
@@ -28,8 +29,8 @@ function SubList({smokinStyle}) {
       handleRemoveInUse();
       dispatch(clearPosts());
       const subNames = getSubNames(subReddits);
-      dispatch(homePosts({subReddits:subNames, after:null}));
-  },[subReddits])
+      !inPost && dispatch(homePosts({subReddits:subNames, after:null}));
+  },[subReddits, dispatch])
 
 // Event handler for selecting a subreddit and its consequences.
 

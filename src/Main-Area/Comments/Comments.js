@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState} from "react";
+import React, {useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchComments} from "./Comments-Slice";
 import Comment from './Comment';
@@ -8,21 +8,24 @@ import { fetchUserProfile } from "./Comments-Slice";
 function Comments({styles, information}) {
     const inCaseOfChange = information.permalink ? information.permalink : null;
     const dispatch = useDispatch();
-    useLayoutEffect(() => {
+    useEffect(() => {
         dispatch(fetchComments(information.permalink));
-    },[inCaseOfChange])
+    },[inCaseOfChange,dispatch]);
 
     const {comments, currentProfiles} = useSelector((state) => ({
         comments:state.comments.comments,
         currentProfiles:state.comments.themProfiles
     }));
-    let authorNames = getMeThoseNames(comments);
-    authorNames = authorNames.filter(cName => !(currentProfiles.some(prof => prof.data.data.name === cName)))
+    
+    
+    // authorNames = authorNames.filter(cName => !(currentProfiles.some(prof => prof.data.data.name === cName)))
     
 
-     useLayoutEffect(() => {
-        dispatch(fetchUserProfile(authorNames));
-    },[inCaseOfChange,authorNames]) 
+      useEffect( () => {
+        const authorNames = comments.length > 0 ? getMeThoseNames(comments) : [];
+        console.log(authorNames);
+        authorNames.length > 0 && dispatch(fetchUserProfile(authorNames));
+    },[comments,dispatch]);
 
     return (
         <section>
