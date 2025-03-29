@@ -40,7 +40,6 @@ function PostList({styles}) {
       currentProfiles: state.comments.themProfiles,
       selectedSubreddit: state.subList.selectedSubreddit
     }));
-    console.log('AAAAAAH, I CANT STOP RERENDERING!!!!!');
 
     
 

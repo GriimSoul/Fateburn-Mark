@@ -1,16 +1,18 @@
-import React from "react";
-import { useDispatch, useSelector} from "react-redux";
+import React, { useState } from "react";
+import {useSelector} from "react-redux";
 import fixUrlsIfAny from "../../utils/FunctionalInnerUrls";
 import timeAgo from '../../utils/TimeStamps';
 import { themProfilePics } from "../../utils/GimmePics";
+import arrowUp from '../Post/Arrow Up.svg';
+import arrowDown from '../Post/Arrow Down.svg';
 
 function Comment({styles, information}) {
 
-    // const dispatch = useDispatch();
     const repliesExist = information.replies ? true : false;
     let authors = [information.author];
     const userInfo = useSelector(state => state.comments.themProfiles);
     const pfpElement = themProfilePics(userInfo, information.author);
+
 
     // create array of reply elements & fill it if replies exist || Pain
     let replyElements = [];
@@ -41,6 +43,11 @@ function Comment({styles, information}) {
                     </h4>
                     <p>{timeAgo(reply.created_utc)}</p>
                     <p dangerouslySetInnerHTML={fixUrlsIfAny(reply.body)}></p>
+
+                    <img src={arrowUp} alt="Upvote" />
+                    <h5>{reply.score}</h5>
+                    <img src={arrowDown} alt="Downvote" />
+
                 </div>
             );
             replyElements.push(element); // Add the element to the replyElements array
@@ -60,6 +67,11 @@ function Comment({styles, information}) {
                 <p>{timeAgo(information.created_utc)}</p>
                 <p dangerouslySetInnerHTML={fixUrlsIfAny(information.body)}></p>
             </div>
+
+            <img src={arrowUp} alt="Upvote" />
+            <h5>{information.score}</h5>
+            <img src={arrowDown} alt="Downvote" />
+
             {replyElements.length > 0 && replyElements.map(reply => reply)}
         </section>
     )

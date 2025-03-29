@@ -23,7 +23,6 @@ function Comments({styles, information}) {
 
       useEffect( () => {
         const authorNames = comments.length > 0 ? getMeThoseNames(comments) : [];
-        console.log(authorNames);
         authorNames.length > 0 && dispatch(fetchUserProfile(authorNames));
     },[comments,dispatch]);
 

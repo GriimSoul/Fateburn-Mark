@@ -1,5 +1,5 @@
 import React from "react";
-import missing from '../../../Main-Area/fateburn face.png';
+import missing from '../../../Main-Area/fateburn face.svg';
 import { useSelector } from "react-redux";
 
 function SubReddit({styles, addRemove, information, plusMinus, selected, handleClick}) {

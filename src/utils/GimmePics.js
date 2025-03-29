@@ -1,5 +1,5 @@
 import nullUserPic from './chrome.png';
-import nullSubRedditPic from '../Main-Area/fateburn face.png';
+import nullSubRedditPic from '../Main-Area/fateburn face.svg';
 import { cleanThemAmps } from './FunctionalInnerUrls';
 
 export function themProfilePics(information, author) {
