@@ -2,9 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const fetchComments = createAsyncThunk(
   'comments/fetchComments',
-  async (postId, { rejectWithValue }) => {
+  async (information, { rejectWithValue }) => {
     try {
-      const response = await fetch(`https://www.reddit.com${postId}.json`);
+      const response = await fetch(`https://www.reddit.com${information.id}.json?limit=5${information.after && `&after=${information.after}`}`);
       if (!response.ok) throw new Error('Failed to fetch comments');
       const data = await response.json();
       data.shift(); // remove the first element which corresponds to the Post itself.
@@ -44,7 +44,8 @@ const commentsSlice = createSlice({
     comments: [],
     themProfiles: [],
     loading: false,
-    error: null
+    error: null,
+    after: null
   },
   reducers: {
     clearComments: (state, action) => {

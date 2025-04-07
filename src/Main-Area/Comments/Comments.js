@@ -9,7 +9,7 @@ function Comments({styles, information}) {
     const inCaseOfChange = information.permalink ? information.permalink : null;
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchComments(information.permalink));
+        dispatch(fetchComments({id:information.permalink}));
     },[inCaseOfChange,dispatch]);
 
     const {comments, currentProfiles} = useSelector((state) => ({

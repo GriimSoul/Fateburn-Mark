@@ -1,6 +1,6 @@
 export default function godThisIsPain(information) {
-    console.log('okay now we should see WHY THE FUCK, it cannot acess all of the data things.')
-    console.log(information);
+   // console.log('okay now we should see WHY THE FUCK, it cannot acess all of the data things.')
+    // console.log(information);
 
     const allTheDamnNames = [];
     information.map((singleComment) => {

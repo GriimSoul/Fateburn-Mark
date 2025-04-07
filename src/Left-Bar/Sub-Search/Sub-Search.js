@@ -3,10 +3,9 @@ import { useDispatch, useSelector} from 'react-redux';
 import { clearSubReddits, setSearchInput, searchSubs } from './Sub-Search-Slice';
 import debounce from '../../utils/Debounce';
 
-function SubSearch(props) {
+function SubSearch() {
   const dispatch = useDispatch();
   const input = useSelector((state) => state.subSearch.subSearchInput);
-  const {smokinStyle} = props;
 
   const debouncedChange = useCallback( debounce((value) => {
       if (value !== "") {

@@ -4,7 +4,7 @@ import { cleanThemAmps } from './FunctionalInnerUrls';
 
 export function themProfilePics(information, author) {
     if (author === '[deleted]' || !author) {
-        !author && console.log('might wanna check why the hell a null/Undefined author got here');
+        !author && console.log('Null / Undefined Author Received');
         return (
             <img alt='default user picture' src={nullUserPic}></img>
         )
@@ -22,25 +22,27 @@ export function themProfilePics(information, author) {
 
 export function themSubredditPics(information, subreddit) {
     const individualInfo = information.find(obj => obj.display_name === subreddit);
+    let clean_icon = false;
 
-
-
-    const iconLinkDirty = individualInfo.community_icon;
-    function removeNonsenseFromLink(link) {
-        if (link.includes(".png")) {
-            return link.split('.png')[0] + '.png';
+    if (individualInfo){
+        const iconLinkDirty = individualInfo.community_icon;
+        function removeNonsenseFromLink(link) {
+            if (link.includes(".png")) {
+                return link.split('.png')[0] + '.png';
+            }
+            else if (link.includes(".jpg")) {
+                return link.split('.jpg')[0] + '.jpg';
+            }
+            else if (link.includes(".jpeg")) {
+                return link.split('.jpeg')[0] + '.jpeg';
+            }
+            else if (link.includes(".webp")) {
+                return link.split('.webp')[0] + '.webp';
+            }
         }
-        else if (link.includes(".jpg")) {
-            return link.split('.jpg')[0] + '.jpg';
-        }
-        else if (link.includes(".jpeg")) {
-            return link.split('.jpeg')[0] + '.jpeg';
-        }
-        else if (link.includes(".webp")) {
-            return link.split('.webp')[0] + '.webp';
-        }
+        clean_icon = removeNonsenseFromLink(iconLinkDirty);
     }
-    const clean_icon = removeNonsenseFromLink(iconLinkDirty);
+
 
     return (
         <a href={`https://www.reddit.com/r/${subreddit}`}>

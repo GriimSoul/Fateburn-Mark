@@ -4,9 +4,11 @@ import LeftArea from './Left-Bar/Left-Bar';
 import TopArea from './Top-bar/Top-Bar';
 import MainArea from './Main-Area/Main-Area';
 // Import Styles
-import styles from './App.css';
+import './App.css';
 
 function App() {
+
+
   return (
     <div className={styles.Background}>
       <TopArea />

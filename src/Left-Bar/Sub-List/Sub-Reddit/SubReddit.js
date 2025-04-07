@@ -2,7 +2,7 @@ import React from "react";
 import missing from '../../../Main-Area/fateburn face.svg';
 import { useSelector } from "react-redux";
 
-function SubReddit({styles, addRemove, information, plusMinus, selected, handleClick}) {
+function SubReddit({ addRemove, information, plusMinus, selected, handleClick}) {
 
     const storedReddits = useSelector((state) => state.subList.subReddits);
 
@@ -15,7 +15,7 @@ function SubReddit({styles, addRemove, information, plusMinus, selected, handleC
     else if (information.title === "Home") { // Create special rendering for Home option.
         return (
 
-            <div onClick={handleClick} className={selected === information.display_name_prefixed ? styles.Selected : styles.SubReddit}>
+            <div onClick={handleClick} >
                 <img src={ information.community_icon} />
                 <h3>{information.title}</h3>
             </div>
@@ -41,7 +41,7 @@ function SubReddit({styles, addRemove, information, plusMinus, selected, handleC
 
     return (
 
-        <div className={selected === information.display_name_prefixed ? styles.Selected : styles.SubReddit}>
+        <div >
             <div onClick={handleClick}>
                 <img src={ clean_icons ? clean_icons : missing} />
                 <h3>{information.display_name}</h3>

@@ -1,9 +1,17 @@
 import React from "react";
 
-function ToTop({styles}) {
+function ToTop() {
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // Smooth scroll
+      });
+    };
+
     return (
-        <a href="#">
-            <img href="To add later" />
-        </a>
+            <img src='pending' alt='Return to top' onClick={scrollToTop} style={{ position: 'fixed', bottom: '20px', right: '20px' }}/>
     )
 }
+
+export default ToTop;
