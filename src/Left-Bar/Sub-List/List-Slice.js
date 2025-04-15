@@ -1,5 +1,5 @@
 import { createSlice} from '@reduxjs/toolkit';
-import home from '../Home.png';
+import home from '../Home.svg';
 
 
 const subListSlice = createSlice({

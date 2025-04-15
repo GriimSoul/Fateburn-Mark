@@ -4,6 +4,11 @@ import { useSelector } from "react-redux";
 
 function SubReddit({ addRemove, information, plusMinus, selected, handleClick}) {
 
+    // Initial check to see if the item is selected
+    const amISelected = selected === information.display_name_prefixed ? true : false;
+
+
+
     const storedReddits = useSelector((state) => state.subList.subReddits);
 
     if (!information) {
@@ -14,10 +19,11 @@ function SubReddit({ addRemove, information, plusMinus, selected, handleClick}) 
     }
     else if (information.title === "Home") { // Create special rendering for Home option.
         return (
-
-            <div onClick={handleClick} >
-                <img src={ information.community_icon} />
-                <h3>{information.title}</h3>
+            <div class={amISelected ? 'subRedditTCSelected':'subRedditTopContainer'}>
+                <div onClick={handleClick} class='subRedditContainer'>
+                    <img src={ information.community_icon} class='subLImage' alt=''/>
+                    <h3 class='subLName'>{information.title}</h3>
+                </div>
             </div>
         )
     }
@@ -41,14 +47,14 @@ function SubReddit({ addRemove, information, plusMinus, selected, handleClick}) 
 
     return (
 
-        <div >
-            <div onClick={handleClick}>
-                <img src={ clean_icons ? clean_icons : missing} />
-                <h3>{information.display_name}</h3>
+        <div class={amISelected ? 'subRedditTCSelected':'subRedditTopContainer'}>
+            <div onClick={handleClick} class='subRedditContainer'>
+                <img src={ clean_icons ? clean_icons : missing} class='subLImage' alt=''/>
+                <h3 class='subLName'>{information.display_name}</h3>
             </div>
 
             {Object.keys(information).length > 0 && (
-        <button onClick={() => addRemove(information)}>
+        <button onClick={() => addRemove(information)} class='addRemove'>
           {plusMinus}
         </button>
       )}

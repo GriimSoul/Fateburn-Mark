@@ -140,7 +140,7 @@ function PostList() {
 
     return (
         <section>
-          <div ref={topObserver}> padding</div>
+          <div ref={topObserver} id='ForPadding'></div>
           {showButton && <ToTop/>}
             {postResults.length !== 0 ? (
   <>
@@ -148,7 +148,7 @@ function PostList() {
         <Post key={result.id} information={result}/>
     ))}
     <div ref={searchObserver}>
-    {resultLoading ? <img src={loadImg}/> : <img src={loadedImg}/>}
+    {resultLoading ? <img src={loadImg} alt='loading'class='thatFlower'/> : (<><img src={loadedImg} alt='loaded' class='thatFlower'/> <p class='damnIt'>So yeah... either the search that you made has no results, or the API overloaded. If nothing else is working, it's the latter, only solution is to wait a couple minutes until the cooldown passes and reload. Sorry.</p></>)}
     </div>
   </>
 ) : (<>
@@ -156,7 +156,7 @@ function PostList() {
       <Post key={aPost.data.id} information={aPost.data}/>
   ))}
   <div ref={postObserver}>
-  {loading ? <img src={loadImg}/> : <img src={loadedImg}/>}
+  {loading ? <img src={loadImg} alt='loading' class='thatFlower'/> : <><img src={loadedImg} alt='loaded' class='thatFlower'/> <p class='damnIt'>So yeah... either the search that you made has no results, or the API overloaded. If nothing else is working, it's the latter, only solution is to wait a couple minutes until the cooldown passes and reload. Sorry.</p></>}
   </div>
   </>
 )}

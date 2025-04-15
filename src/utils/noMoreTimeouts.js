@@ -1,5 +1,5 @@
 const API_CALL_LIMIT = 50; // 50 requests per minute
-const TIME_WINDOW = 60000; // 1 minute in milliseconds
+const TIME_WINDOW = 120000; // 1 minute in milliseconds
 
 let callCount = 0;
 let firstCallTime = null;

@@ -26,8 +26,9 @@ function SubSearch() {
 
 
   return (
-    <div>
+    <div id='SubSearchContainer'>
       <input
+        id='SubSearch'
         type="text"
         value={input}
         onChange={handleChange}

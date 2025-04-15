@@ -1,4 +1,5 @@
 import React from "react";
+import sylphy from './up.png';
 
 function ToTop() {
 
@@ -10,7 +11,12 @@ function ToTop() {
     };
 
     return (
-            <img src='pending' alt='Return to top' onClick={scrollToTop} style={{ position: 'fixed', bottom: '20px', right: '20px' }}/>
+          <a href="#ForPadding">
+            <div id='TakeMeToTop' >
+               <p>To Top</p>
+              <img src={sylphy} alt='Return to top' id='TakeMeToTopImg'/>
+            </div>
+          </a>
     )
 }
 

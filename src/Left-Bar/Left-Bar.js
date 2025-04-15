@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import SubSearch from './Sub-Search/Sub-Search';
 import SubList from './Sub-List/Sub-List';
-import styles from './Left-Bar.module.css';
+import './Left-Bar.css';
+import hideShow from './HideShow.svg';
 
-function LeftBar(props) {
+function LeftBar() {
 
     const [isHidden, setIsHidden] = useState(false);
 
@@ -12,14 +13,12 @@ function LeftBar(props) {
     };
 
     return (
-        <div>
-            <section className={isHidden ? styles.leftAreaHidden : styles.leftArea}>
-                <SubSearch smokinStyle={styles} />
-                <SubList smokinStyle={styles}/>
+        <div id="LeftContainer">
+            <section class={isHidden ? 'leftAreaHidden' : 'leftArea'}>
+                <SubSearch />
+                <SubList />
             </section>
-            <button className={isHidden ? styles.Hide : styles.Show} onClick={toggleVisibility}>
-                    hide button
-                </button>
+            <img id='LeftAreaButton' src={hideShow} onClick={toggleVisibility} alt='Hide/Show button'/>
         </div>
     )
 }

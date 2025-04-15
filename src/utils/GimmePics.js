@@ -1,4 +1,4 @@
-import nullUserPic from './chrome.png';
+import nullUserPic from './chrome.svg';
 import nullSubRedditPic from '../Main-Area/fateburn face.svg';
 import { cleanThemAmps } from './FunctionalInnerUrls';
 
@@ -6,7 +6,7 @@ export function themProfilePics(information, author) {
     if (author === '[deleted]' || !author) {
         !author && console.log('Null / Undefined Author Received');
         return (
-            <img alt='default user picture' src={nullUserPic}></img>
+            <img alt='default user' src={nullUserPic} class='userPicture'></img>
         )
     }
     else if (information.length > 0) {
@@ -14,7 +14,7 @@ export function themProfilePics(information, author) {
         if (individualInfo) {
             const cleansedURL = cleanThemAmps(individualInfo.data.data.subreddit.icon_img);
             return (
-                <a href={`https://www.reddit.com/user/${author}`} target='_blank' rel="noreferrer"><img alt={author + ' profile picture'} src={cleansedURL}/></a>
+                <a href={`https://www.reddit.com/user/${author}`} target='_blank' rel="noreferrer"><img alt={author + ' profile'} src={cleansedURL} class='userPicture'/></a>
             )
         }
     }
@@ -46,7 +46,7 @@ export function themSubredditPics(information, subreddit) {
 
     return (
         <a href={`https://www.reddit.com/r/${subreddit}`}>
-            <img alt={`${subreddit} sub picture`} src={clean_icon ? clean_icon : nullSubRedditPic}/>
+            <img alt={`${subreddit} sub`} src={clean_icon ? clean_icon : nullSubRedditPic} class='mainAreaSubPic'/>
         </a>
     )
 }

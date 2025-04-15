@@ -17,7 +17,7 @@
     import {clearComments} from '../Comments/Comments-Slice';
 
 
-function Post({styles, information}) {
+function Post({information}) {
 // Define variables for ease of use, and to avoid head explosions.
     const dispatch = useDispatch();
     const singleLink = information.url_overridden_by_dest;
@@ -77,7 +77,7 @@ function Post({styles, information}) {
     }
 
     function ifYoutubeLink() { // If the post has a single youtube video link, modify it into an embed link to be able to used it in an iframe
-        const youtubeLink = singleLink.replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/');
+        const youtubeLink = singleLink.includes('https://youtu.be/') ? singleLink.replace('https://youtu.be/', 'https://www.youtube.com/embed/') : singleLink.replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/');
         return youtubeLink;
     }
 
@@ -105,61 +105,60 @@ function Post({styles, information}) {
     }
 
     return (
-        <article>
-            {inPost && (<img src={goBack} onClick={exit} alt='go back button'/>)}
-            <div>
+        <article class='singlePost'>
+            {inPost && (<img src={goBack} onClick={exit} alt='go back button' id='ReturnButton'/>)}
+            <div class='leftPostInfo'>
 
-                <img src={score.isUp ? upVoteImg : arrowUp} alt="Upvote" onClick={handleUpVote}/>
-                <h3>{score.score}</h3>
-                <img src={score.isDown ? downVoteImg : arrowDown} alt="Downvote" onClick={handleDownVote}/>
+                <img src={score.isUp ? upVoteImg : arrowUp} alt="Upvote" onClick={handleUpVote} class='upVotePost'/>
+                <h3 class='votesCountPost'>{score.score}</h3>
+                <img src={score.isDown ? downVoteImg : arrowDown} alt="Downvote" onClick={handleDownVote} class='downVotePost'/>
 
-                {inPost ? (<img alt='view comments' src={commentImg}/>): (<img onClick={enter} alt='view comments' src={commentImg}/>)}
-                <h3>{information.num_comments}</h3>
+                {inPost ? (<img alt='view comments' src={commentImg} class='commentsIcon'/>): (<img onClick={enter} alt='view comments' src={commentImg} class='commentsIcon'/>)}
+                <h3 class='commentsCount'>{information.num_comments}</h3>
 
             </div>
-            
-            <p>{timeAgo(information.created_utc)}</p>
-            {inPost ? (<h2><a href={"https://www.reddit.com" + information.permalink} target="_blank">{information.title}</a></h2>)
-             : (<h2 onClick={enter}>{information.title}</h2>)}
-             
-            <p dangerouslySetInnerHTML={fixUrlsIfAny(information.selftext)}></p>
-
-        {/* Logic to handle rendering posts that are image or video centric.*/}
-
-            {singleLink && (
-                (singleLink.includes("https://www.youtube.com") || singleLink.includes("https://youtu.be")) ? (
-        // Handle if the post has a youtube Video.
-
-                    <iframe src={ifYoutubeLink()} 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; 
-                            encrypted-media; gyroscope; picture-in-picture; web-share" 
-                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                    </iframe>
-
-                ) : ( // check if multiple images are in the post
+            <div class='overallPostContent'>
                 
-                    information.is_gallery ? (
-                        /* morePictures.map((pic) => (
-                            <img key={pic} src={pic} alt=''/>
-                        )) */
-                       inPost ? viewer : <img src={morePictures[0]} alt='first image'/>
-                    ) : (
-            // New file extension check for single link
-
-                        (/\.(jpg|jpeg|gif|png|webp)$/i.test(singleLink)) ? (
-            // Show image if extension matches
-
-                            <img src={singleLink} alt=''/>
+                {inPost ? (<h2 class='postTitle'><a href={"https://www.reddit.com" + information.permalink} target="_blank" rel="noreferrer">{information.title}</a></h2>)
+                 : (<h2 onClick={enter} class='postTitle'>{information.title}</h2>)}
+                <hr/>
+                <p class='postContent' dangerouslySetInnerHTML={fixUrlsIfAny(information.selftext)}></p>
+                
+                        {/* Logic to handle rendering posts that are image or video centric.*/}
+                {singleLink && (
+                    (singleLink.includes("https://www.youtube.com") || singleLink.includes("https://youtu.be")) ? (
+                        // Handle if the post has a youtube Video.
+                        <iframe src={ifYoutubeLink()}
+                                title={ifYoutubeLink()}
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write;
+                                encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen
+                                class='yTVideoEmbed'>
+                        </iframe>
+                    ) : ( // check if multiple images are in the post
+                
+                        information.is_gallery ? (
+                           inPost ? viewer : <img src={morePictures[0]} alt='' class='galleryImage'/>
                         ) : (
-                            // Show raw link text if not an image
-
-                            <a href={singleLink}>{singleLink}</a> ))))}
-            <div>
-                {pfpElement}
-                <p>{information.author}</p>
-                {subImgElement}
-                <p>{information.subreddit}</p>
+                // New file extension check for single link
+                            (/\.(jpg|jpeg|gif|png|webp)$/i.test(singleLink)) ? (
+                // Show image if extension matches
+                                <img src={singleLink} alt='' class='anImageInPost'/>
+                            ) : (
+                                // Show raw link text if not an image
+                                <a href={singleLink}>{singleLink}</a> ))))}
+                    <div class='bottomInfo'>
+                        <div class='back2back'>
+                            {pfpElement}
+                            <p class='postAuthorName'>{information.author}</p>
+                        </div>
+                        <div class='back2back'>
+                            {subImgElement}
+                            <p class='postSubName'>{information.subreddit}</p>
+                        </div >
+                        <p class='timeAgoPost'>{timeAgo(information.created_utc)}</p>
+                    </div>
             </div>
         </article>
     )

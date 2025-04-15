@@ -1,14 +1,16 @@
 import React from 'react';
 import Search from './Search-Function/Search';
-import styles from './Top-Bar.module.css';
-import logo from './fateburn.png';
+import './Top-Bar.css';
+import logo from './fateburn.svg';
 
-function TopBar(props) {
+function TopBar() {
 
-return  (  <section className={styles.TopArea}>
-        <img src={logo} className={styles.logo}/>
-        <p className={styles.FateburnMark}>Fateburn Mark</p>
-        <Search smokinStyle={styles}/>
+return  (  <section class="topArea">
+        <div class='fateburnContainer'>
+            <img src={logo} id='Logo'/>
+            <p id='SiteTitle'>Fateburn Mark</p>
+        </div>
+        <Search/>
     </section>)
 }
 

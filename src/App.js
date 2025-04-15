@@ -10,10 +10,12 @@ function App() {
 
 
   return (
-    <div className={styles.Background}>
+    <div id='OneToContainThemAll'>
       <TopArea />
-      <LeftArea />
-      <MainArea />
+      <div id='OneToContainBoth'>
+        <LeftArea />
+        <MainArea />
+      </div>
     </div>
   );
 }

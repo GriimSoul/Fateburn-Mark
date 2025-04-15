@@ -46,3 +46,28 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+/* Fonts */
+
+@font-face {
+	font-family: 'Fateburn';
+	src: url('./Top-bar/title.ttf');
+}
+@font-face {
+	font-family: 'Content';
+	src: url('./Content.ttf');
+}
+@font-face {
+	font-family: 'Headers';
+	src: url('./Headers.ttf');
+}
+
+#OneToContainThemAll {
+	display:flex;
+	flex-wrap: wrap;
+	background-color: #121212;
+}
+#OneToContainBoth {
+	display:flex;
+	width:100vw;
+}

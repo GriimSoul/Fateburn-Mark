@@ -39,12 +39,13 @@ function Search() {
   }
 
   return (
-    <div>
+    <div id='PostSearchContainer'>
       <input
         type="text"
         placeholder='Search for posts'
         value={input}
         onChange={handleChange}
+        id='PostSearch'
       />
     </div>
   );

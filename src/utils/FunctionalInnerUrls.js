@@ -23,7 +23,7 @@ function fixUrlsIfAny(theText) { // Handle cases when the post text contains URL
             const cleanURL = cleanThemAmps(url);
             content = content.replaceAll(
                 url,
-                `<img src="${cleanURL}"/><br>`
+                `<img src="${cleanURL}" class="postImage"/><br>`
             );
         })
     }    

@@ -1,0 +1,134 @@
+#LeftContainer {
+    display: flex;
+}
+
+.leftAreaHidden {
+    width:0px;
+    height:85vh;
+    overflow: hidden;
+}
+.leftArea {
+    display:flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 20vw;
+    height: 85vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    background-image: url('./AngelHalo.svg');
+    background-repeat: repeat;
+    background-size: 20vw;
+    background-color: #59532ebd;
+}
+.leftArea::-webkit-scrollbar {
+    display: none;
+}
+
+
+#LeftAreaButton {
+    height:4vh;
+}
+
+#SubSearchContainer {
+    display:flex;
+    background-color: #0c0c0c85;
+}
+
+#SubSearch {
+    background: rgb(26 26 26 / 91%);
+    backdrop-filter: blur(8px);
+    border: 0.3vw groove rgb(30 37 77 / 86%);
+    color: white;
+    border-radius: 20%;
+    padding: 2%;
+    font-size: clamp(2vh, 2vw, 3.4vh);
+    font-family: 'Content';
+    margin: 0.4vw;
+}
+
+#SubList {
+    background-color: #0c0c0c85;
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.2vw;
+}
+
+.subRedditTopContainer {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #22143b9c;
+    margin-bottom: 0.2vw;
+    border-radius: 0 12% 12%;
+}
+
+.subRedditContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 0 12% 12%;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.subLImage {
+    box-sizing: border-box;
+    width: 5vw;
+    border-radius: 50%;
+    border: 0.3vw groove #410e0e; 
+}
+
+.subLName {
+    font-family: 'Headers';
+    font-size: clamp(2vh, 1.05vw, 3.5vh);
+    color: white;
+    margin-left: 1vw;
+    font-weight: 600;
+}
+
+.addRemove {
+    box-sizing: border-box;
+    border-radius: 50%;
+    width: 15%;
+    font-size: 2vw;
+    font-weight: 600;
+    color: white;
+    background-color: #1b072b;
+    border-style: dotted;
+    border-width: 0.2vw;
+    border-color: #9138a5;
+    margin-right: 0.4vw;
+}
+
+.addRemove:hover {
+    background-color: #63003c;
+    border-style: groove;
+}
+.addRemove:active {
+    background-color: rgb(133, 241, 133);
+    color:black;
+    border-style: dashed;
+}
+
+#LeftAreaButton {
+    align-self: center;
+    width: 1.2vw;
+    background-color: #251d35ed;
+    border: 0.2vw solid #1a0635;
+    border-left: none;
+    padding: 1vw 0;
+    border-radius: 0 100% 100% 0;
+}
+
+.subRedditTCSelected {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #315b00b5;
+    text-decoration: wavy;
+    margin-bottom: 0.2vw;
+    border-radius: 0 12% 12%;
+}

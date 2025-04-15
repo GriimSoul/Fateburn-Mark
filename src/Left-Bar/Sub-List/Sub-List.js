@@ -102,7 +102,7 @@ function arrayOfNamesForEndPoint() {
 
 
   return (
-    <div>
+    <div id='SubList'>
     {subResults.length !== 0 ? (
   subResults.map((result) => (
     <SubReddit key={result.title} information={result} addRemove={handleAdd} plusMinus="+"/>

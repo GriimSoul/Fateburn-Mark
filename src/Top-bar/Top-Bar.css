@@ -1,0 +1,45 @@
+.topArea {
+    position: relative;
+    width: 100%;
+    height: 15vh;
+    display: flex;
+    flex-direction: row;
+    background: repeating-linear-gradient(180deg, #243939e0, #130f27e0 1vw, #000016fa 1vw, #144e6be0 1vw);
+    justify-content: space-between;
+    border-radius: 0 0 4% 4%;
+    overflow: hidden;
+}
+
+#SiteTitle {
+    font-family: "Fateburn";
+    font-size: clamp(2vh, 3.3vw, 10vh);
+    color: transparent;
+    background: linear-gradient(45deg, #b96d8d, #a841ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-stroke: 0.07vw #f1c7ff;
+    text-shadow: -0.5vw 0.2vw 1.2vw rgba(0, 0, 0, 0.5);
+}
+
+.fateburnContainer {
+    display: flex;
+    align-items: center;
+}
+#Logo {
+    height: 100%;
+}
+#PostSearchContainer {
+    display: flex;
+    align-items: center;
+    margin-right: 2vw;
+}
+#PostSearch {
+    background: rgb(26 26 26 / 91%);
+    backdrop-filter: blur(8px);
+    border: 0.4vw solid rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 24%;
+    padding: 4%;
+    font-size: clamp(2vh, 3vw, 3.4vh);
+    font-family: 'Content';
+}
