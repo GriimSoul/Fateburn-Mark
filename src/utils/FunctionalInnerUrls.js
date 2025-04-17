@@ -34,7 +34,7 @@ function fixUrlsIfAny(theText) { // Handle cases when the post text contains URL
 
 export function cleanThemAmps(str) {
     return typeof str === 'string' 
-    ? str.replace(/&amp;/g, '&') 
+    ? (str.replace(/&amp;/g, '&')) 
     : console.log('check cleanThemAmps Calls, whatever you gave me, it\'s not a string');
 }
 

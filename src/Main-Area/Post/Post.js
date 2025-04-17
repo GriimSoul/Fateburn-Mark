@@ -95,10 +95,10 @@ function Post({information}) {
             function handleLeft() { setImageIndex(prev => prev - 1 >= 0 ? prev - 1 : morePictures.length - 1)}
 
             viewer = (
-                <section>
-                    <img src={prevPic} onClick={handleLeft} alt=''/>
-                    <a href={morePictures[imageIndex]}><img src={morePictures[imageIndex]} alt=''/></a>
-                    <img src={nextPic} onClick={handleRight} alt=''/>
+                <section class='leImageViewer'>
+                    <img src={prevPic} onClick={handleLeft} alt='' class='nextPrevPic'/>
+                    <a href={morePictures[imageIndex]}><img src={morePictures[imageIndex]} alt='' class='galleryImage'/></a>
+                    <img src={nextPic} onClick={handleRight} alt='' class='nextPrevPic'/>
                 </section>
             )
         }
@@ -106,14 +106,14 @@ function Post({information}) {
 
     return (
         <article class='singlePost'>
-            {inPost && (<img src={goBack} onClick={exit} alt='go back button' id='ReturnButton'/>)}
             <div class='leftPostInfo'>
 
+                {inPost && (<img src={goBack} onClick={exit} alt='go back button' id='ReturnButton'/>)}
                 <img src={score.isUp ? upVoteImg : arrowUp} alt="Upvote" onClick={handleUpVote} class='upVotePost'/>
                 <h3 class='votesCountPost'>{score.score}</h3>
                 <img src={score.isDown ? downVoteImg : arrowDown} alt="Downvote" onClick={handleDownVote} class='downVotePost'/>
 
-                {inPost ? (<img alt='view comments' src={commentImg} class='commentsIcon'/>): (<img onClick={enter} alt='view comments' src={commentImg} class='commentsIcon'/>)}
+                {inPost ? (<img alt='view comments' src={commentImg} class='commentsIconOff'/>): (<img onClick={enter} alt='view comments' src={commentImg} class='commentsIcon'/>)}
                 <h3 class='commentsCount'>{information.num_comments}</h3>
 
             </div>

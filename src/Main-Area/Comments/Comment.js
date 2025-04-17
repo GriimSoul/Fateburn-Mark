@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {useSelector} from "react-redux";
 import fixUrlsIfAny from "../../utils/FunctionalInnerUrls";
 import timeAgo from '../../utils/TimeStamps';
@@ -32,21 +32,29 @@ function Comment({styles, information}) {
             // Create the reply element
             const replyPfp = themProfilePics(userInfo, reply.author);
             const element = (
-                <div key={reply.id}>
-                    {replyPfp}
-                    <h4>
-                        {authorExists ? ( 
-                            <a href={`https://www.reddit.com/user/${reply.author}/`} target='_blank' rel="noreferrer">
-                                {reply.author}
-                            </a>
-                        ) : reply.author}
-                    </h4>
-                    <p>{timeAgo(reply.created_utc)}</p>
-                    <p dangerouslySetInnerHTML={fixUrlsIfAny(reply.body)}></p>
+                <div key={reply.id} class='aReply'>
+                    <div class='mainReply'>
+                        <div class='commentAuthorBit'>
+                            {replyPfp}
+                            <h4 class='commentAuthor'>
+                                {authorExists ? (
+                                    <a href={`https://www.reddit.com/user/${reply.author}/`} target='_blank' rel="noreferrer">
+                                        {reply.author}
+                                    </a>
+                                ) : reply.author}
+                            </h4>
+                        </div>
+                        <p dangerouslySetInnerHTML={fixUrlsIfAny(reply.body)} class='commentContent'></p>
+                    </div>
 
-                    <img src={arrowUp} alt="Upvote" />
-                    <h5>{reply.score}</h5>
-                    <img src={arrowDown} alt="Downvote" />
+                    <div class='commentInfo'>
+                        <div class='commentVotes'>
+                            <img src={arrowUp} alt="Upvote" class='commentArrows'/>
+                            <h5 class='commentScore'>{reply.score}</h5>
+                            <img src={arrowDown} alt="Downvote" class='commentArrows'/>
+                        </div>
+                        <p class='commentTimestamp'>{timeAgo(reply.created_utc)}</p>
+                    </div>
 
                 </div>
             );
@@ -60,17 +68,23 @@ function Comment({styles, information}) {
     }
 
     return (
-        <section>
-            <div>
-                <a href={`https://www.reddit.com/user/${information.author}/`} target='_blank' rel="noreferrer">{pfpElement}</a>
-                <h4><a href={`https://www.reddit.com/user/${information.author}/`} target='_blank' rel="noreferrer">{information.author}</a></h4>
-                <p>{timeAgo(information.created_utc)}</p>
-                <p dangerouslySetInnerHTML={fixUrlsIfAny(information.body)}></p>
+        <section class='aComment'>
+            <div class='mainComment'>
+                <div class='commentAuthorBit'>
+                    <a href={`https://www.reddit.com/user/${information.author}/`} target='_blank' rel="noreferrer">{pfpElement}</a>
+                    <h4 class='commentAuthor'><a href={`https://www.reddit.com/user/${information.author}/`} target='_blank' rel="noreferrer">{information.author}</a></h4>
+                </div>
+                <p dangerouslySetInnerHTML={fixUrlsIfAny(information.body)} class='commentContent'></p>
             </div>
 
-            <img src={arrowUp} alt="Upvote" />
-            <h5>{information.score}</h5>
-            <img src={arrowDown} alt="Downvote" />
+            <div class='commentInfo'>
+                <div class='commentVotes'>
+                    <img src={arrowUp} alt="Upvote" class='commentArrows'/>
+                    <h5 class='commentScore'>{information.score}</h5>
+                    <img src={arrowDown} alt="Downvote" class='commentArrows'/>
+                </div>
+                <p class='commentTimestamp'>{timeAgo(information.created_utc)}</p>
+            </div>
 
             {replyElements.length > 0 && replyElements.map(reply => reply)}
         </section>

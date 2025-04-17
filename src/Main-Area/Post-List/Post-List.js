@@ -34,6 +34,16 @@ const getAuthorNames = (postsInfo, profileInfo) => {
     }
   return postCreatorNames;
 }
+const getRAuthorNames = (resultsInfo, profileInfo) => {
+  let postCreatorNames = [];
+    for (let post of resultsInfo) {
+      const exists = profileInfo.some(oldProfile => oldProfile.data.data.name === post.author);
+      if (post.author !== '[deleted]' && !postCreatorNames.includes(post.author && !exists)) {
+        postCreatorNames.push(post.author);
+      }
+    }
+  return postCreatorNames;
+}
 
 function PostList() {
     //Initialize state Selectors and dispatch
@@ -90,7 +100,8 @@ function PostList() {
     useEffect(() => {
       const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
-              if (entry.isIntersecting && !loading && after) {
+              // Guard: Only fetch if there are posts rendered to avoid infinite fetch loop
+              if (entry.isIntersecting && !loading && after && posts.length > 0) {
                   // Dispatch the fetch action with the after token
                   if (entry.target === postObserver.current) {
                     const subNames = getSubNames(subReddits, selectedSubreddit);
@@ -104,10 +115,10 @@ function PostList() {
           });
       });
 
-      if (searchObserver.current) {
+      if (searchObserver.current && posts.length > 0) {
           observer.observe(searchObserver.current);
       }
-      if (postObserver.current) {
+      if (postObserver.current && posts.length > 0) {
         observer.observe(postObserver.current);
       }
 
@@ -129,14 +140,20 @@ function PostList() {
     }, [dispatch])
 
     let postCreatorNames = getAuthorNames(posts, currentProfiles);
+    let searchCreatorNames = getRAuthorNames(postResults, currentProfiles);
+    searchCreatorNames = searchCreatorNames.filter(cName => !(currentProfiles.some(prof => prof.data.data.name === cName)))
     postCreatorNames = postCreatorNames.filter(cName => !(currentProfiles.some(prof => prof.data.data.name === cName)))
     
     // Create Effect to store user profiles.
     useEffect(() => {
       if (postCreatorNames.length > 0) {
-      dispatch(fetchUserProfile(postCreatorNames));
-    }
-    },[posts,dispatch])
+        dispatch(fetchUserProfile(postCreatorNames));
+      }
+      else if (searchCreatorNames.length > 0) {
+        dispatch(fetchUserProfile(searchCreatorNames));
+      }
+
+    },[posts, dispatch, postResults])
 
     return (
         <section>

@@ -5,20 +5,16 @@ import Comment from './Comment';
 import getMeThoseNames from '../../utils/Comment Name Fetch';
 import { fetchUserProfile } from "./Comments-Slice";
 
-function Comments({styles, information}) {
+function Comments({information}) {
     const inCaseOfChange = information.permalink ? information.permalink : null;
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchComments({id:information.permalink}));
     },[inCaseOfChange,dispatch]);
 
-    const {comments, currentProfiles} = useSelector((state) => ({
+    const {comments} = useSelector((state) => ({
         comments:state.comments.comments,
-        currentProfiles:state.comments.themProfiles
     }));
-    
-    
-    // authorNames = authorNames.filter(cName => !(currentProfiles.some(prof => prof.data.data.name === cName)))
     
 
       useEffect( () => {
@@ -27,8 +23,8 @@ function Comments({styles, information}) {
     },[comments,dispatch]);
 
     return (
-        <section>
-            {comments.length > 0 && comments.map(aComment => <Comment key={aComment.id} information={aComment.data} styles={styles}/>)}
+        <section id='CommentsArea'>
+            {comments.length > 0 && comments.map(aComment => <Comment key={aComment.data.id} information={aComment.data}/>)}
         </section>
     )
     

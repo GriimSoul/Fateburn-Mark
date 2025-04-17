@@ -35,6 +35,7 @@
     font-size: clamp(1.4vw, 1.7vw, 5vh);
     font-weight: 1000;
     z-index: 500;
+    cursor: pointer;
 }
 #TakeMeToTop.p {
     margin-right: 1vw;
@@ -66,6 +67,10 @@
 }
 .commentsIcon {
     margin-top: 54%;
+    cursor: pointer;
+}
+.commentsIconOff {
+    margin-top: 54%;
 }
 .overallPostContent {
     display: flex;
@@ -94,6 +99,7 @@
     font-size:125%;
     margin-bottom: 1vw;
     margin-top: auto;
+    padding-top: 1vw;
 }
 .bottomInfo .userPicture {
     width: 6vw;
@@ -117,7 +123,7 @@
 .postAuthorName, .postSubName {
     margin-left: 1.5vw;
 }
-.postContent a {
+a {
     text-decoration: underline;
     cursor:pointer;
     color:#96ff90;
@@ -127,4 +133,84 @@
 }
 .damnIt {
     font-size: 2.3vw;
+}
+#ReturnButton {
+    margin-bottom: 2vw;
+    cursor: pointer;
+}
+.nextPrevPic {
+    height: 5vw;
+    width: 2.5vw;
+    align-self: center;
+    cursor: pointer;
+}
+.leImageViewer {
+    display:flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.commentAuthorBit .userPicture {
+    width: 6vw;
+    border-radius: 50%;
+}
+#CommentsArea {
+    background-color: #180d03;
+    border-radius: 1%;
+}
+.aComment {
+    border-radius: 2%;
+    background-color: #1e0f00;
+    margin-bottom: 1vw;
+    box-sizing: border-box;
+    border-right: 0.5vw solid #2f1010;
+}
+.mainComment {
+    display: flex;
+    margin-bottom: 0.8vw;
+}
+.commentInfo {
+    font-weight: bolder;
+    display: flex;
+    justify-content: space-around;
+    font-family: 'Headers';
+    font-size: clamp(2vh, 1.6vw, 4vh);
+    box-sizing: border-box;
+    border-bottom: solid 0.7vw #100c0c;
+    border-top: solid 0.5vw #100c0c8a;
+    padding: 0.3vw 0;
+}
+.commentAuthorBit {
+    margin-left: 0.7vw;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.7vw;
+    align-items: center;
+    font-family: 'Headers';
+    font-size: clamp(2vh, 1.5vw, 4vw);
+    border-right: solid 0.3vw #100c0c;
+    padding-right: 0.4vw;
+}
+.commentContent {
+    align-self: center;
+    font-family: 'Content';
+    font-size: clamp(1.8vh, 1.5vw, 3vw);
+    margin-left: 0.7vw;
+}
+.commentScore, .commentTimestamp {
+    align-self: center;
+}
+.aReply {
+    box-sizing: border-box;
+    border-left: solid 3vw #100c0c;
+}
+.mainReply {
+    display: flex;
+}
+.commentVotes {
+    display: flex;
+}
+.commentScore {
+    margin-right:1.4vw;
+    margin-left: 1.4vw;
 }
