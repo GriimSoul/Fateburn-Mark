@@ -20,7 +20,8 @@ export const getSubNames = (subs, selectedSubreddit) => {
    return subNames;
   }
   else {
-    const subName = [selectedSubreddit];
+    let subName = selectedSubreddit;
+    subName = subName && subName.slice(2);
     return subName;
   }
 };

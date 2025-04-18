@@ -214,3 +214,6 @@ a {
     margin-right:1.4vw;
     margin-left: 1.4vw;
 }
+.upVotePost, .downVotePost {
+    cursor: pointer;
+}
