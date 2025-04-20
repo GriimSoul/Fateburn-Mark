@@ -3,13 +3,6 @@ import sylphy from './up.png';
 
 function ToTop() {
 
-    function scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth' // Smooth scroll
-      });
-    };
-
     return (
           <a href="#ForPadding">
             <div id='TakeMeToTop' >

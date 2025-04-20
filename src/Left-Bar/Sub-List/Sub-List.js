@@ -5,7 +5,6 @@ import { filterPosts, clearSearch } from '../../Top-bar/Search-Function/Search-S
 import SubReddit from './Sub-Reddit/SubReddit';
 import { homePosts, clearPosts} from '../../Main-Area/Post-List/Post-List-Slice';
 import { getSubNames } from '../../Main-Area/Post-List/Post-List';
-import debounce from '../../utils/Debounce';
 
 function SubList() {
   const dispatch = useDispatch();
@@ -34,7 +33,7 @@ function SubList() {
       dispatch(clearPosts());
       const subNames = getSubNames(subReddits);
       !inPost && dispatch(homePosts({subReddits:subNames, after:null}));
-  },[subReddits, dispatch])
+  },[subReddits, dispatch, handleRemoveInUse])
   useEffect(() => {
 
     if (fasterSelected) {
@@ -44,7 +43,7 @@ function SubList() {
       }
     }
     setFasterSelected(true);
-  },[selected,subReddits])
+  },[selected,subReddits,dispatch, arrayOfNamesForEndPoint])
 
 // Event handler for selecting a subreddit and its consequences.
 
@@ -74,7 +73,7 @@ function arrayOfNamesForEndPoint() {
       dispatch(clearSearch());
 
       if (searchInput) { // Execute search again within the selected subreddit
-        let nothing;
+        
       }
 
       else if (redditId !== 'Nothing is but what is not'){ // Fetch posts of the selected subreddit
