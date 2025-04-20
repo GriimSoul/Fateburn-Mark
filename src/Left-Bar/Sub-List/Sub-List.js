@@ -8,7 +8,7 @@ import { getSubNames } from '../../Main-Area/Post-List/Post-List';
 
 function SubList() {
   const dispatch = useDispatch();
-  const [fasterSelected, setFasterSelected] = useState(false)
+  const [fasterSelected, setFasterSelected] = useState('Everything');
 
   // Obtain input from the top Search bar in order to re-search once a new Sub has been selected
   const searchInput = useSelector(state => state.searchTop.postSearchTerm);
@@ -24,14 +24,17 @@ function SubList() {
   function handleRemoveInUse() {
     if (!subReddits.some(sub => sub.display_name_prefixed === selected)) {
       dispatch(selectSubReddit('Everything'));
+      return true;
+    }
+    else {
+      return false
     }
   }
 
   // Effect to handle changes in the stored subreddits.
   useEffect(() => {
-      handleRemoveInUse();
+      const subNames = handleRemoveInUse() ? getSubNames(subReddits, 'Everything') : getSubNames(subReddits, selected); 
       dispatch(clearPosts());
-      const subNames = getSubNames(subReddits, fasterSelected);
       !inPost && dispatch(homePosts({subReddits:subNames, after:null}));
   },[subReddits, dispatch])
   useEffect(() => {
