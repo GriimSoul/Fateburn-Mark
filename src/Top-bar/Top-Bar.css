@@ -43,3 +43,27 @@
     font-size: clamp(2vh, 3vw, 3.4vh);
     font-family: 'Content';
 }
+
+@media (orientation: portrait) {
+
+    .topArea {
+        height: 7vh;
+        flex-direction: row-reverse;
+    }
+    #SiteTitle {
+        font-size: clamp(5vw, 5vw, 10vw);
+    }
+    #PostSearchContainer {
+        margin-right: 1vh;
+        margin-left: 8vw;
+    }
+    #Logo {
+        transform: scaleX(-1);
+    }
+    .fateburnContainer {
+        flex-direction: row-reverse;
+    }
+    #PostSearch {
+        padding: 1vh 0
+    }
+}

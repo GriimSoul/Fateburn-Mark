@@ -6,6 +6,12 @@ import { themProfilePics } from "../../utils/GimmePics";
 import arrowUp from '../Post/Arrow Up.svg';
 import arrowDown from '../Post/Arrow Down.svg';
 
+export function decodeHtmlEntities(str) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(str, 'text/html');
+    return doc.documentElement.textContent;
+}
+
 function Comment({styles, information}) {
 
     const repliesExist = information.replies ? true : false;
@@ -44,7 +50,7 @@ function Comment({styles, information}) {
                                 ) : reply.author}
                             </h4>
                         </div>
-                        <p dangerouslySetInnerHTML={fixUrlsIfAny(reply.body)} class='commentContent'></p>
+                        <p dangerouslySetInnerHTML={fixUrlsIfAny(decodeHtmlEntities(reply.body))} class='commentContent'></p>
                     </div>
 
                     <div class='commentInfo'>
@@ -74,7 +80,7 @@ function Comment({styles, information}) {
                     <a href={`https://www.reddit.com/user/${information.author}/`} target='_blank' rel="noreferrer">{pfpElement}</a>
                     <h4 class='commentAuthor'><a href={`https://www.reddit.com/user/${information.author}/`} target='_blank' rel="noreferrer">{information.author}</a></h4>
                 </div>
-                <p dangerouslySetInnerHTML={fixUrlsIfAny(information.body)} class='commentContent'></p>
+                <p dangerouslySetInnerHTML={fixUrlsIfAny(decodeHtmlEntities(information.body))} class='commentContent'></p>
             </div>
 
             <div class='commentInfo'>

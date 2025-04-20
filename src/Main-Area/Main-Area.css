@@ -217,3 +217,56 @@ a {
 .upVotePost, .downVotePost {
     cursor: pointer;
 }
+
+@media (orientation: portrait) {
+    .leftPostInfo {
+        font-size:clamp(2vh, 3vw, 5vh);
+        width:6vw;
+    }
+    .postTitle {
+        font-size:clamp(3vh, 4vw, 6vh)
+    }
+    .bottomInfo {
+        font-size:clamp(1.2vh, 2.7vw, 5vh)
+    }
+    #TakeMeToTopImg {
+        width:14vw;
+    }
+    #TakeMeToTop {
+        font-size: clamp(3vh, 5vw, 10vh);
+    }
+    #MainArea {
+        height: 93vh;
+        position:relative;
+        z-index:2;
+        width:100vw;
+    }
+    .galleryImage {
+        width:90%;
+        margin-left:5%;
+    }
+    .commentAuthorBit .userPicture {
+        width: 13vw;
+    }
+    .aComment {
+        margin-bottom: 1vh;
+    }
+    .commentInfo {
+        font-size: clamp(2vw, 2.5vw , 7vw );
+    }
+    .commentAuthorBit {
+        margin-left:1vh;
+        margin-top:1vh;
+        font-size:clamp(2vw, 2.5vw , 7vw );
+    }
+    .commentContent {
+        margin-left:1vh;
+        font-size:clamp(2vw, 3.5vw,7vw);
+    }
+    .commentArrows {
+        height:3vh;
+    }
+    .aReply {
+        border-left: solid 6vw #100c0c;
+    }
+}

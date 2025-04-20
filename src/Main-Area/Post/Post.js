@@ -15,7 +15,7 @@
     import fixUrlsIfAny, {cleanThemAmps} from '../../utils/FunctionalInnerUrls';
     import { themProfilePics, themSubredditPics } from "../../utils/GimmePics";
     import {clearComments} from '../Comments/Comments-Slice';
-
+    import { decodeHtmlEntities } from '../Comments/Comment';
 
 function Post({information}) {
 // Define variables for ease of use, and to avoid head explosions.
@@ -119,10 +119,10 @@ function Post({information}) {
             </div>
             <div class='overallPostContent'>
                 
-                {inPost ? (<h2 class='postTitle'><a href={"https://www.reddit.com" + information.permalink} target="_blank" rel="noreferrer">{information.title}</a></h2>)
-                 : (<h2 onClick={enter} class='postTitle'>{information.title}</h2>)}
+                {inPost ? (<h2 class='postTitle'><a href={"https://www.reddit.com" + information.permalink} target="_blank" rel="noreferrer">{decodeHtmlEntities(information.title)}</a></h2>)
+                 : (<h2 onClick={enter} class='postTitle'>{decodeHtmlEntities(information.title)}</h2>)}
                 <hr/>
-                <p class='postContent' dangerouslySetInnerHTML={fixUrlsIfAny(information.selftext)}></p>
+                <p class='postContent' dangerouslySetInnerHTML={fixUrlsIfAny(decodeHtmlEntities(information.selftext))}></p>
                 
                         {/* Logic to handle rendering posts that are image or video centric.*/}
                 {singleLink && (

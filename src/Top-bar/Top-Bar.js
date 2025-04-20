@@ -7,7 +7,7 @@ function TopBar() {
 
 return  (  <section class="topArea">
         <div class='fateburnContainer'>
-            <img src={logo} id='Logo'/>
+            <img src={logo} id='Logo' alt='Logo'/>
             <p id='SiteTitle'>Fateburn Mark</p>
         </div>
         <Search/>
