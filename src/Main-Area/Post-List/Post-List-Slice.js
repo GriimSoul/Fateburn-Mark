@@ -9,13 +9,7 @@ export const homePosts = createAsyncThunk(
         return rejectWithValue('Invalid subReddits parameter');
       }
       const response = await fetch(
-        `https://www.reddit.com/r/${Array.isArray(subReddits) ? subReddits.join('+') : subReddits}/new.json?limit=5${after ? `&after=${after}` : ''}`,
-        {
-          method: 'GET',
-          headers: {
-            "User-Agent": navigator.userAgent
-          }
-        }
+        `https://www.reddit.com/r/${Array.isArray(subReddits) ? subReddits.join('+') : subReddits}/new.json?limit=5${after ? `&after=${after}` : ''}`
       );
       if (!response.ok) throw new Error('Failed to fetch posts');
       const data = await response.json();

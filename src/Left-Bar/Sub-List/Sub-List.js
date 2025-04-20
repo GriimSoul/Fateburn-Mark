@@ -43,7 +43,7 @@ function SubList() {
       }
     }
     setFasterSelected(true);
-  },[selected,subReddits,dispatch])
+  },[selected,subReddits])
 
 // Event handler for selecting a subreddit and its consequences.
 
@@ -81,7 +81,7 @@ function arrayOfNamesForEndPoint() {
       
       }
       else { // Fetch posts of all stored subreddits.
-        const subNames = getSubNames(subReddits);
+        const subNames = getSubNames(subReddits, selected);
         dispatch(homePosts({subReddits: subNames, after:null}));
       }
     }
