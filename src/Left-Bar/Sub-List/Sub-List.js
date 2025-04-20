@@ -31,7 +31,7 @@ function SubList() {
   useEffect(() => {
       handleRemoveInUse();
       dispatch(clearPosts());
-      const subNames = getSubNames(subReddits);
+      const subNames = getSubNames(subReddits, fasterSelected);
       !inPost && dispatch(homePosts({subReddits:subNames, after:null}));
   },[subReddits, dispatch])
   useEffect(() => {
