@@ -68,6 +68,14 @@ To work around this, I’m considering upgrading the middleware with a built-in 
 
 ---
 
+### Known Issues
+
+The post fetch of the 'Home' option (which englobes all saved subreddits) does not seem to dispatch at all on mobile, and by consequence the initial post fetch doesn't happen either. All other functionalities and singular subreddits seem to work fine.
+
+A workaround I've found is to change the user agent of you phone's browser (if it allows for it) to Windows (Chrome), I am currently working on finding out why this makes it magically work perfectly again. Sorry for inconveniences.
+
+---
+
 ### Potential Features  
 
 1. **Mock Voting on Comments**  
