@@ -13,8 +13,8 @@ function App() {
     <div id='OneToContainThemAll'>
       <TopArea />
       <div id='OneToContainBoth'>
-        <LeftArea />
-        <MainArea />
+       <LeftArea />
+       <MainArea />
       </div>
     </div>
   );

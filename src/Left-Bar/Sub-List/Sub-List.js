@@ -33,7 +33,7 @@ function SubList() {
       dispatch(clearPosts());
       const subNames = getSubNames(subReddits);
       !inPost && dispatch(homePosts({subReddits:subNames, after:null}));
-  },[subReddits, dispatch, handleRemoveInUse])
+  },[subReddits, dispatch])
   useEffect(() => {
 
     if (fasterSelected) {
@@ -43,7 +43,7 @@ function SubList() {
       }
     }
     setFasterSelected(true);
-  },[selected,subReddits,dispatch, arrayOfNamesForEndPoint])
+  },[selected,subReddits,dispatch])
 
 // Event handler for selecting a subreddit and its consequences.
 

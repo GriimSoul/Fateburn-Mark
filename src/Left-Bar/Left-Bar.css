@@ -27,7 +27,7 @@
     background-image: url('./AngelHalo.svg');
     background-repeat: repeat;
     background-size: 20vw;
-    background-color: #000000ef;
+    background-color: #505050;
     transition: width 0.3s ease;
 }
 .leftArea::-webkit-scrollbar {
