@@ -43,6 +43,9 @@
     font-size: clamp(2vh, 3vw, 3.4vh);
     font-family: 'Content';
 }
+#ClickMe {
+    cursor: pointer;
+}
 
 @media (orientation: portrait) {
 
